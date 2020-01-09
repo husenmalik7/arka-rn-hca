@@ -1,61 +1,78 @@
 import React from 'react';
-import { StyleSheet, View, Text, Button, TextInput } from 'react-native';
+import { StyleSheet, View, Text, Button, TextInput, Image, FlatList } from 'react-native';
+// import { Searchbar } from 'react-native-paper';
+// import ActionButton from 'react-native-action-button';
 
+import axios from 'axios';
+
+const url = 'http://192.168.6.139:9000/'
 
 class EngineerListScreen extends React.Component {
+    state = {
+        engineerList: []
+    }
+
+    componentDidMount() {
+        this.getData()
+    }
+
+    getData(){
+        // axios.get('http://mhs.rey1024.com/apibudaya/getListCategory.php')
+        axios.get(url+'engineer', console.log('URLRURLRURLRU'))
+
+        
+        .then(res => {
+            console.log(res.data.response);
+            this.setState({ engineerList: res.data.response });
+            // console.log(this.state.engineerList,'123');
+        })
+    }
+
+    
+
+
+
     render() {
-
-        const { navigate } = this.props.navigation;
-
         return (
-                <View style={styles.container}>
-                    <Text>Register</Text>
 
-                    <TextInput 
-                    style={styles.textInput}
-                    placeholder="Username"
-                    onChangeText={(text) => this.setState({inputUsername: text})}
-                    />
+            <View 
+            style={{
+              flex: 1, 
+              flexDirection: 'column',
+              alignItems: 'stretch',
+            }}>
 
-                    <TextInput 
-                    style={styles.textInput}
-                    secureTextEntry={true}
-                    placeholder="Password"
-                    onChangeText={(text) => this.setState({inputUsername: text})}
-                    />
+              <View style={{
+                height: 50, 
+                alignItems: 'center',
+                flexDirection: 'row',
+                backgroundColor: 'powderblue', 
+                justifyContent: 'space-between',
+              }}>
+                  <Image source={{uri: 'https://facebook.github.io/react/logo-og.png'}} style={{width: 20, height: 20}} />
+                  <Text>2</Text>
+                  <Image source={{uri: 'https://facebook.github.io/react/logo-og.png'}} style={{width: 20, height: 20}} />
+                  
+              </View>
+            
+              <View style={{height: 50, backgroundColor: 'skyblue', alignItems: 'center',   justifyContent: 'center'}} >
+                  {/* <Searchbar style={{width: '80%'}} placeholder="Search"/> */}
+                  <Text>Caritana search bar</Text>
+              </View>
+
+              <View style={{flex: 1,  backgroundColor: 'steelblue'}} >
+            {console.log(this.state.engineerList, 'lopopoppopop')}
 
 
-                    <Button
-                        title="REGISTER ME"
-                    />
-
-                    <Text>{"\n"}</Text>
-
-                    <Button
-                        title="Login"
-                        onPress={() => navigate('Login')}
-                    />
-                </View>
+                  <FlatList
+                    data={ this.state.engineerList }
+                    renderItem={({item}) => <Text>{item.name}</Text>}
+                    keyExtractor={(item, index) => index.toString() }
+                  />
+              </View>
+          </View>
         );
     }
 }
 
-export default RegisterScreen;
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-
-    textInput: {
-        width: '80%',
-        height: 40,
-        borderColor: '#009688',
-        borderWidth: 1,
-        backgroundColor: '#fff',
-        textAlign: "center",
-        margin: '5%'
-    }
-});
+export default EngineerListScreen;

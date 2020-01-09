@@ -47,6 +47,7 @@ class LoginScreen extends React.Component {
 
                 <Button
                     title="LOGIN ME"
+                    onPress={() => navigate('EngineerList')}
                 />
 
                 <Text>{"\n"}</Text>
