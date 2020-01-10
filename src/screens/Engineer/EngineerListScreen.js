@@ -6,15 +6,23 @@ import { StyleSheet, View, Text, Button, Picker,
 import ActionButton from 'react-native-action-button';
 import Modal, { ModalTitle, ModalContent, ModalFooter, ModalButton,
                 SlideAnimation } from 'react-native-modals'
+import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button'
 
 import axios from 'axios';
 
 const url = 'http://192.168.6.140:9000/'
 
+let radio_props = [
+  {label: 'this', value: 0},
+  {label: 'that', value: 1},
+]
+
+
 class EngineerListScreen extends React.Component {
     state = {
         engineerList: [],
-        modalVisible: false
+        modalVisible: false,
+        pickerState: null,
     }
 
     setModalVisible(visible) {
@@ -28,8 +36,6 @@ class EngineerListScreen extends React.Component {
     getData(){
         // axios.get('http://mhs.rey1024.com/apibudaya/getListCategory.php')
         axios.get(url+'engineer', console.log('URLRURLRURLRU'))
-
-        
         .then(res => {
             // console.log(res.data.response);
             this.setState({ engineerList: res.data.response });
@@ -38,11 +44,14 @@ class EngineerListScreen extends React.Component {
     }
 
     
-
-
+    
+    
+    
 
     render() {
+      console.log('huhuhu', this.state.selectedValue)
         return (
+
 
           <View style={{
               flex: 1, 
@@ -105,7 +114,6 @@ class EngineerListScreen extends React.Component {
               >
                 
 
-
                 <View style={{
                   flex: 0.1,
                   flexDirection: 'column',
@@ -114,7 +122,6 @@ class EngineerListScreen extends React.Component {
                     <View style={{
                       width: 300,
                       height: 100}}>
-
                     </View>
                 </View>
           
@@ -123,11 +130,24 @@ class EngineerListScreen extends React.Component {
                     Sort By : 
                   </Text>
 
-                  <Picker>
-                    <Picker.Item label="Name" />
-                    <Picker.Item label="Skill" />
-                    <Picker.Item label="Date Updated" />
+                  <Picker 
+                    selectedValue={this.state.pickerState}
+                    // onValueChange={(itemValue) => this.setState({pickerState: itemValue}), console.log(this.state.pickerState) }
+                    onValueChange={(itemValue) => console.log(itemValue) }
+                  >
+                    {/* {console.log('huhuhu', this.state.selectedValue)} */}
+                    <Picker.Item label="Name" value="name"   onPress={() => console.log('111name')}/>
+                    <Picker.Item label="Skill" value="skill" onPress={() => console.log('222skill')} />
+                    <Picker.Item label="Date Updated" value="dateupdated"/>
                   </Picker>
+
+
+                  <RadioForm
+                    radio_props={radio_props}
+                    initial={0}
+                    // onPress={(value) => {this.setState({value:value})}}
+                    onPress={(value) => {console.log(value,'7===')}}
+                  />                  
 
 
                 </ModalContent>
