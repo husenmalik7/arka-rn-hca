@@ -1,8 +1,11 @@
 import React from 'react';
-import { StyleSheet, View, Text, Button, TextInput, Modal, TouchableHighlight,
-        Image, FlatList, Alert } from 'react-native';
+import { StyleSheet, View, Text, Button, Picker,
+         TextInput, TouchableHighlight,
+         Image, FlatList, Alert } from 'react-native';
 // import { Searchbar } from 'react-native-paper';
 import ActionButton from 'react-native-action-button';
+import Modal, { ModalTitle, ModalContent, ModalFooter, ModalButton,
+                SlideAnimation } from 'react-native-modals'
 
 import axios from 'axios';
 
@@ -28,7 +31,7 @@ class EngineerListScreen extends React.Component {
 
         
         .then(res => {
-            console.log(res.data.response);
+            // console.log(res.data.response);
             this.setState({ engineerList: res.data.response });
             // console.log(this.state.engineerList,'123');
         })
@@ -65,7 +68,7 @@ class EngineerListScreen extends React.Component {
               </View>
 
               <View style={{flex: 1,  backgroundColor: 'steelblue'}} >
-                {console.log(this.state.engineerList, 'lopopoppopop')}
+                {/* {console.log(this.state.engineerList, 'lopopoppopop')} */}
                 <FlatList
                   data={ this.state.engineerList }
                   renderItem={({item}) => <Text>{item.name}</Text>}
@@ -76,38 +79,62 @@ class EngineerListScreen extends React.Component {
 
               <ActionButton
                 buttonColor="rgba(231,76,60,1)"
-                onPress={() => { console.log("hi")}}
+                onPress={() => { console.log("hi"),
+                                 this.setModalVisible(true)
+                                //  this.setState({ modalVisible: true })
+                               }}
               />
 
-              <View style={{marginTop: 22}}>
-                <Modal
-                  animationType="slide"
-                  transparent={false}
-                  visible={this.state.modalVisible}
-                  onRequestClose={() => {Alert.alert('Modal has been closed')}}
-                >
-                  <View style={{marginTop: 22}}>
-                    <View>
-                      <Text>Wassup fellas</Text>
-                    
-                  
+              <Modal
+                visible={this.state.modalVisible}
+                modalAnimation={new SlideAnimation({slideFrom: 'bottom'})}
+                onTouchOutside={() => { this.setModalVisible(false) }}
+                modalTitle={<ModalTitle title="sesuatu title" />}
+                footer={
+                  <ModalFooter>
+                    <ModalButton 
+                      text="Cancel"
+                      onPress={() => { this.setModalVisible(false) }}
+                    />
+                    <ModalButton 
+                      text="OK"
+                      onPress={() => {}}
+                    />
+                  </ModalFooter>
+                }
+              >
+                
 
-                      <TouchableHighlight
-                        onPress={() => {this.setModalVisible(!this.state.modalVisible)} }
-                      >
-                      <Text>Hide momodl</Text>
-                      </TouchableHighlight>
+
+                <View style={{
+                  flex: 0.1,
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  alignItems: 'center'}}>
+                    <View style={{
+                      width: 300,
+                      height: 100}}>
+
                     </View>
-                  </View>
-                </Modal>
+                </View>
+          
+                <ModalContent>
+                  <Text>
+                    Sort By : 
+                  </Text>
+
+                  <Picker>
+                    <Picker.Item label="Name" />
+                    <Picker.Item label="Skill" />
+                    <Picker.Item label="Date Updated" />
+                  </Picker>
 
 
-                <TouchableHighlight
-                  onPress={() => {this.setModalVisible(true)}}
-                >
-                  <Text>SSHOw modalas</Text>
-                </TouchableHighlight>
-              </View>
+                </ModalContent>
+
+              </Modal>
+
+             
 
           </View>
         );
