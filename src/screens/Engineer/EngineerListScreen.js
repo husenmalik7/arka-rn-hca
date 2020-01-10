@@ -13,8 +13,9 @@ import axios from 'axios';
 const url = 'http://192.168.6.140:9000/'
 
 let radio_props = [
-  {label: 'this', value: 0},
-  {label: 'that', value: 1},
+  {label: 'Name', value: 0},
+  {label: 'Skill', value: 1},
+  {label: 'Date Updated', value: 2},
 ]
 
 
@@ -22,7 +23,7 @@ class EngineerListScreen extends React.Component {
     state = {
         engineerList: [],
         modalVisible: false,
-        pickerState: null,
+        radioSelected: 9
     }
 
     setModalVisible(visible) {
@@ -43,13 +44,26 @@ class EngineerListScreen extends React.Component {
         })
     }
 
+    modalSubmit(){
+      this.setModalVisible(false);
+      console.log('...your final radio = ', this.state.radioSelected);
+      let radioSelected = this.state.radioSelected; //0 for name, 1 for skill, 2 for dateupdated
+      let querySort = '';
+      
+        if (radioSelected == 0) { 
+          querySort = ''
+
+        }
+
+
+    }
+
     
     
     
     
 
     render() {
-      console.log('huhuhu', this.state.selectedValue)
         return (
 
 
@@ -88,8 +102,9 @@ class EngineerListScreen extends React.Component {
 
               <ActionButton
                 buttonColor="rgba(231,76,60,1)"
-                onPress={() => { console.log("hi"),
-                                 this.setModalVisible(true)
+                onPress={ () => { console.log("hi"),
+                                 this.setModalVisible(true),
+                                 this.setState({ radioSelected: 0})
                                 //  this.setState({ modalVisible: true })
                                }}
               />
@@ -102,13 +117,11 @@ class EngineerListScreen extends React.Component {
                 footer={
                   <ModalFooter>
                     <ModalButton 
-                      text="Cancel"
-                      onPress={() => { this.setModalVisible(false) }}
-                    />
-                    <ModalButton 
                       text="OK"
-                      onPress={() => {}}
+                      // onPress={() => { this.setModalVisible(false) }}
+                      onPress={() => { this.modalSubmit() }}
                     />
+                  
                   </ModalFooter>
                 }
               >
@@ -130,24 +143,21 @@ class EngineerListScreen extends React.Component {
                     Sort By : 
                   </Text>
 
-                  <Picker 
-                    selectedValue={this.state.pickerState}
-                    // onValueChange={(itemValue) => this.setState({pickerState: itemValue}), console.log(this.state.pickerState) }
-                    onValueChange={(itemValue) => console.log(itemValue) }
-                  >
-                    {/* {console.log('huhuhu', this.state.selectedValue)} */}
-                    <Picker.Item label="Name" value="name"   onPress={() => console.log('111name')}/>
-                    <Picker.Item label="Skill" value="skill" onPress={() => console.log('222skill')} />
-                    <Picker.Item label="Date Updated" value="dateupdated"/>
-                  </Picker>
-
+                
 
                   <RadioForm
                     radio_props={radio_props}
                     initial={0}
-                    // onPress={(value) => {this.setState({value:value})}}
-                    onPress={(value) => {console.log(value,'7===')}}
-                  />                  
+                    formHorizontal={false}
+                    labelHorizontal={true}
+                    animation={true}
+                    onPress={(value) => {this.setState({radioSelected:value})}}
+                  >
+
+                    
+                  </RadioForm>
+
+
 
 
                 </ModalContent>
