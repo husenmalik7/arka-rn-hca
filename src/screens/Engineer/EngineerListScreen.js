@@ -1,16 +1,20 @@
 import React from 'react';
-import { StyleSheet, View, Text, Button, Picker,
+import { StyleSheet, View, Text, Picker,
          TextInput, TouchableHighlight,
          Image, FlatList, Alert } from 'react-native';
-// import { Searchbar } from 'react-native-paper';
+import { Searchbar } from 'react-native-paper';
 import ActionButton from 'react-native-action-button';
 import Modal, { ModalTitle, ModalContent, ModalFooter, ModalButton,
                 SlideAnimation } from 'react-native-modals'
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button'
+import { Container, Header, Item, Input, Icon, Button } from 'native-base';
+import { ButtonGroup } from 'react-native-elements';
 
 import axios from 'axios';
 
-const url = 'http://192.168.6.140:9000/'
+
+
+const url = 'http://192.168.6.139:9000/'
 
 let radio_props = [
   {label: 'Name', value: 0},
@@ -23,7 +27,10 @@ class EngineerListScreen extends React.Component {
     state = {
         engineerList: [],
         modalVisible: false,
-        radioSelected: 9
+        radioSelected: 9,
+        selectedIndexOrder: null,
+        selectedIndexSort: null,
+        search: ''
     }
 
     setModalVisible(visible) {
@@ -46,16 +53,38 @@ class EngineerListScreen extends React.Component {
 
     modalSubmit(){
       this.setModalVisible(false);
-      console.log('...your final radio = ', this.state.radioSelected);
-      let radioSelected = this.state.radioSelected; //0 for name, 1 for skill, 2 for dateupdated
+      // console.log('...your final radio = ', this.state.radioSelected);
+      // let radioSelected = this.state.radioSelected; //0 for name, 1 for skill, 2 for dateupdated
+      console.log('--your selected order = ', this.state.selectedIndexOrder); // 0 for asc, 1 for desc
+      console.log('--your selected sort = ', this.state.selectedIndexSort); // 0 for name, 1 for skill, 2for dateupdated
+      let selectedIndexOrder = this.state.selectedIndexOrder;
+      let selectedIndexSort = this.state.selectedIndexSort;
       let querySort = '';
+      let queryOrder = '';
       
-        if (radioSelected == 0) { 
-          querySort = ''
+        if (selectedIndexSort == 0) { querySort = '&sort=name' }
+        if (selectedIndexSort == 1) { querySort = '&sort=skill' }
+        if (selectedIndexSort == 2) { querySort = '&sort=dateupdated' }
+        if (selectedIndexOrder == 0) { queryOrder = '&order=asc' }
+        if (selectedIndexOrder == 1) { queryOrder = '&order=desc' }
 
-        }
+      axios.get(url+'engineer/?'+querySort+queryOrder)
+      .then(res => {
+        this.setState({ engineerList: res.data.response})
+      })
 
+    }
 
+    updateIndexOrder(selectedIndexOrder) {
+      this.setState({selectedIndexOrder})
+    }
+
+    updateIndexSort(selectedIndexSort) {
+      this.setState({selectedIndexSort})
+    }
+
+    updateSearch(search){
+      this.setState({search})
     }
 
     
@@ -64,6 +93,10 @@ class EngineerListScreen extends React.Component {
     
 
     render() {
+      const order = ['ASC', 'DESC']
+      const sort = ['Name', 'Skill', 'Date Updated']
+
+
         return (
 
 
@@ -85,9 +118,41 @@ class EngineerListScreen extends React.Component {
                   <Image source={{uri: 'https://facebook.github.io/react/logo-og.png'}} style={{width: 20, height: 20}} />
               </View>
             
-              <View style={{height: 50, backgroundColor: 'skyblue', alignItems: 'center',   justifyContent: 'center'}} >
+              <View style={{height: 50, backgroundColor: 'skyblue', justifyContent: 'center'}} >
                   {/* <Searchbar style={{width: '80%'}} placeholder="Search"/> */}
-                  <Text>Caritana search bar</Text>
+
+
+                  {/* <Searchbar     
+                    placeholder="Search"
+                    width='80%'
+                    // onChangeText={query => { this.setState({ firstQuery: query }); }}
+                    // value={firstQuery}
+                  /> */}
+
+
+                  {/* <Text>Caritana search bar</Text> */}
+
+
+      <Container>
+        <Header searchBar rounded>
+          <Item>
+            {/* <Icon name="ios-search" /> */}
+            <Input placeholder="Search" />
+            {/* <Icon name="ios-people" /> */}
+          </Item>
+          <Button transparent>
+            <Text>Search</Text>
+          </Button>
+        </Header>
+      </Container>                  
+
+                  {/* <SearchBar
+                    placeholder="Search Here..."
+                    onChangeText={this.updateSearch.bind(this)}
+                    value={this.state.search}
+                    lightTheme="true"
+                  /> */}
+
               </View>
 
               <View style={{flex: 1,  backgroundColor: 'steelblue'}} >
@@ -145,17 +210,29 @@ class EngineerListScreen extends React.Component {
 
                 
 
-                  <RadioForm
+                  {/* <RadioForm
                     radio_props={radio_props}
                     initial={0}
                     formHorizontal={false}
                     labelHorizontal={true}
                     animation={true}
                     onPress={(value) => {this.setState({radioSelected:value})}}
-                  >
+                  />  */}
 
-                    
-                  </RadioForm>
+                  <ButtonGroup
+                    buttons={sort}
+                    onPress={this.updateIndexSort.bind(this)}
+                    selectedIndex={this.state.selectedIndexSort}  
+                    fontSize="12"
+                  />
+                  
+                  <ButtonGroup
+                    buttons={order}
+                    onPress={this.updateIndexOrder.bind(this)}
+                    selectedIndex={this.state.selectedIndexOrder}
+                  />
+
+                  
 
 
 
