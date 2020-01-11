@@ -30,7 +30,9 @@ class EngineerListScreen extends React.Component {
         radioSelected: 9,
         selectedIndexOrder: null,
         selectedIndexSort: null,
-        search: ''
+        stateSearch: '',
+        queryFSort: '',
+        queryFSearch: ''
     }
 
     setModalVisible(visible) {
@@ -51,7 +53,7 @@ class EngineerListScreen extends React.Component {
         })
     }
 
-    modalSubmit(){
+    modalSubmit = async () => {
       this.setModalVisible(false);
       // console.log('...your final radio = ', this.state.radioSelected);
       // let radioSelected = this.state.radioSelected; //0 for name, 1 for skill, 2 for dateupdated
@@ -62,13 +64,19 @@ class EngineerListScreen extends React.Component {
       let querySort = '';
       let queryOrder = '';
       
+      
         if (selectedIndexSort == 0) { querySort = '&sort=name' }
         if (selectedIndexSort == 1) { querySort = '&sort=skill' }
         if (selectedIndexSort == 2) { querySort = '&sort=dateupdated' }
         if (selectedIndexOrder == 0) { queryOrder = '&order=asc' }
         if (selectedIndexOrder == 1) { queryOrder = '&order=desc' }
 
-      axios.get(url+'engineer/?'+querySort+queryOrder)
+      
+      await this.setState({queryFSort: querySort+queryOrder})
+      console.log('[][][]', this.state.queryFSort);
+
+      // await axios.get(url+'engineer/?'+querySort+queryOrder)
+      await axios.get(url+'engineer/?'+this.state.queryFSearch+this.state.queryFSort)
       .then(res => {
         this.setState({ engineerList: res.data.response})
       })
@@ -83,8 +91,24 @@ class EngineerListScreen extends React.Component {
       this.setState({selectedIndexSort})
     }
 
-    updateSearch(search){
-      this.setState({search})
+
+    
+    updateSearch= async(search) =>{
+      // console.log('your search', search)
+      await this.setState({stateSearch: search})
+      await console.log('state search', this.state.stateSearch) 
+
+      let querySearch = '&name=' + this.state.stateSearch;
+
+      await this.setState({queryFSearch: querySearch})
+
+      await axios.get(url+'engineer/?'+this.state.queryFSearch+this.state.queryFSort)
+      .then(res => {
+        this.setState({ engineerList: res.data.response})
+      })
+
+      
+      // http://192.168.6.139:9000/engineer/?name=i
     }
 
     
@@ -119,39 +143,27 @@ class EngineerListScreen extends React.Component {
               </View>
             
               <View style={{height: 50, backgroundColor: 'skyblue', justifyContent: 'center'}} >
-                  {/* <Searchbar style={{width: '80%'}} placeholder="Search"/> */}
+              
+                  
+                <Container>
+                  <Header searchBar rounded>
+                    <Item>
+                      {/* <Icon name="ios-search" /> */}
+                      <Input 
+                        placeholder="Search" 
+                        // onChangeText={change => {this.setState({ search: change }), this.updateSearch(change) }}
+                        // value={this.state.search}
+                        onChangeText={change => { this.updateSearch(change) }}
+                      />
+                      {/* <Icon name="ios-people" /> */}
+                    </Item>
+                    <Button transparent>
+                      <Text>Search</Text>
+                    </Button>
+                  </Header>
+                </Container>                  
 
-
-                  {/* <Searchbar     
-                    placeholder="Search"
-                    width='80%'
-                    // onChangeText={query => { this.setState({ firstQuery: query }); }}
-                    // value={firstQuery}
-                  /> */}
-
-
-                  {/* <Text>Caritana search bar</Text> */}
-
-
-      <Container>
-        <Header searchBar rounded>
-          <Item>
-            {/* <Icon name="ios-search" /> */}
-            <Input placeholder="Search" />
-            {/* <Icon name="ios-people" /> */}
-          </Item>
-          <Button transparent>
-            <Text>Search</Text>
-          </Button>
-        </Header>
-      </Container>                  
-
-                  {/* <SearchBar
-                    placeholder="Search Here..."
-                    onChangeText={this.updateSearch.bind(this)}
-                    value={this.state.search}
-                    lightTheme="true"
-                  /> */}
+               
 
               </View>
 
