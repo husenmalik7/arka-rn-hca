@@ -7,9 +7,8 @@ import ActionButton from 'react-native-action-button';
 import Modal, { ModalTitle, ModalContent, ModalFooter, ModalButton,
                 SlideAnimation } from 'react-native-modals'
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button'
-import { Container, Header, Item, Input, Icon, Button } from 'native-base';
-import { ButtonGroup, Card } from 'react-native-elements';
-import { Col, Row, Grid } from "react-native-easy-grid";
+import { Container, Header, Item, Input, Icon } from 'native-base';
+import { ButtonGroup, Card, Button } from 'react-native-elements';
 // import { Card, ListItem, Button, Icon } from 'react-native-elements'
 
 import axios from 'axios';
@@ -122,6 +121,7 @@ class EngineerListScreen extends React.Component {
       const order = ['ASC', 'DESC']
       const sort = ['Name', 'Skill', 'Date Updated']
       const { navigate } = this.props.navigation;
+      
 
 
         return (
@@ -160,9 +160,7 @@ class EngineerListScreen extends React.Component {
                       />
                       {/* <Icon name="ios-people" /> */}
                     </Item>
-                    <Button transparent>
-                      <Text>Search</Text>
-                    </Button>
+                   
                   </Header>
                 </Container>                  
 
@@ -188,14 +186,18 @@ class EngineerListScreen extends React.Component {
                 
                  <Card
                    title={item.name}
+                   image={{uri : 'https://i.pinimg.com/736x/ca/d7/e0/cad7e05880129a7e5877563737dad1dd.jpg'}}                   
                    >
                    <Text style={{marginBottom: 10}}>
                      The idea with React Native Elements is more about component structure than actual design.
                    </Text>
-                   <Button
-                     icon={<Icon name='code' color='#ffffff' />}
-                     buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
-                     title='VIEW NOW' />
+                  
+
+                    <Button
+                      title={item.id_engineer}
+                      onPress={() => navigate('EngineerDetail', {id_engineer: item.id_engineer})}
+                      buttonStyle={{borderRadius: 10, marginLeft: 0, marginRight: 0, marginBottom: 0}}
+                    />
                  </Card>
  
                </View>
@@ -203,56 +205,9 @@ class EngineerListScreen extends React.Component {
 
                 ))}
 
-               
-                
+              
 
-            
-              <View style={styles.item} >
-                
-                <Card
-                  title='HELLO WORLD'
-                  >
-                  <Text style={{marginBottom: 10}}>
-                    The idea with React Native Elements is more about component structure than actual design.
-                  </Text>
-                  <Button
-                    icon={<Icon name='code' color='#ffffff' />}
-                    buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
-                    title='VIEW NOW' />
-                </Card>
-
-              </View>
-
-              <View style={styles.item} >
-                <Card title='HELLO WORLD'>
-                  <Text style={{marginBottom: 10}}> The idea with React Native Elements is more about component structure than actual design.</Text>
-                  <Button icon={<Icon name='code' color='#ffffff' />} buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}} title='VIEW NOW' />
-                </Card>
-              </View>
-              <View style={styles.item} >
-                <Card title='HELLO WORLD'>
-                  <Text style={{marginBottom: 10}}> The idea with React Native Elements is more about component structure than actual design.</Text>
-                  <Button icon={<Icon name='code' color='#ffffff' />} buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}} title='VIEW NOW' />
-                </Card>
-              </View>
-              <View style={styles.item} >
-                <Card title='HELLO WORLD'>
-                  <Text style={{marginBottom: 10}}> The idea with React Native Elements is more about component structure than actual design.</Text>
-                  <Button icon={<Icon name='code' color='#ffffff' />} buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}} title='VIEW NOW' />
-                </Card>
-              </View>
-              <View style={styles.item} >
-                <Card title='HELLO WORLD'>
-                  <Text style={{marginBottom: 10}}> The idea with React Native Elements is more about component structure than actual design.</Text>
-                  <Button icon={<Icon name='code' color='#ffffff' />} buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}} title='VIEW NOW' />
-                </Card>
-              </View>
-              <View style={styles.item} >
-                <Card title='HELLO WORLD'>
-                  <Text style={{marginBottom: 10}}> The idea with React Native Elements is more about component structure than actual design.</Text>
-                  <Button icon={<Icon name='code' color='#ffffff' />} buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}} title='VIEW NOW' />
-                </Card>
-              </View>
+             
               
 
 
@@ -266,57 +221,10 @@ class EngineerListScreen extends React.Component {
                   keyExtractor={(item, index) => index.toString() }
                 /> */}
 
-{/* <Card
-  title='HELLO WORLD'
-  >
-  <Text style={{marginBottom: 10}}>
-    The idea with React Native Elements is more about component structure than actual design.
-  </Text>
-  <Button
-    icon={<Icon name='code' color='#ffffff' />}
-    buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
-    title='VIEW NOW' />
-</Card>
 
-<Card
-  title='HELLO xxx'
-  >
-  <Text style={{marginBottom: 10}}>
-    The idea with React Native Elements is more about component structure than actual design.
-  </Text>
-  <Button
-    icon={<Icon name='code' color='#ffffff' />}
-    buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
-    title='VIEW NOW' />
-</Card>
-
-<Card
-  title='HELLO asdasd'
-  >
-  <Text style={{marginBottom: 10}}>
-    The idea with React Native Elements is more about component structure than actual design.
-  </Text>
-  <Button
-    icon={<Icon name='code' color='#ffffff' />}
-    buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
-    title='VIEW NOW' />
-</Card>
-
-
-
-
-                <Button
-                    title="To the engineer detail"
-                    onPress={() => navigate('EngineerDetail')}
-                />
-
-                <Text>
-                  asdasdsad
-                </Text> */}
 
 
               </ScrollView>
-              {/* </View> */}
 
 
               <ActionButton
