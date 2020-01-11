@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text, Picker,
+import { StyleSheet, View, Text, Picker, ScrollView, 
          TextInput, TouchableHighlight,
          Image, FlatList, Alert } from 'react-native';
 import { Searchbar } from 'react-native-paper';
@@ -8,7 +8,9 @@ import Modal, { ModalTitle, ModalContent, ModalFooter, ModalButton,
                 SlideAnimation } from 'react-native-modals'
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button'
 import { Container, Header, Item, Input, Icon, Button } from 'native-base';
-import { ButtonGroup } from 'react-native-elements';
+import { ButtonGroup, Card } from 'react-native-elements';
+import { Col, Row, Grid } from "react-native-easy-grid";
+// import { Card, ListItem, Button, Icon } from 'react-native-elements'
 
 import axios from 'axios';
 
@@ -119,6 +121,7 @@ class EngineerListScreen extends React.Component {
     render() {
       const order = ['ASC', 'DESC']
       const sort = ['Name', 'Skill', 'Date Updated']
+      const { navigate } = this.props.navigation;
 
 
         return (
@@ -167,14 +170,153 @@ class EngineerListScreen extends React.Component {
 
               </View>
 
-              <View style={{flex: 1,  backgroundColor: 'steelblue'}} >
-                {/* {console.log(this.state.engineerList, 'lopopoppopop')} */}
-                <FlatList
+              
+
+              {/* <View style={styles.container}> */}
+              <ScrollView contentContainerStyle={styles.container} >
+
+                  {/* <FlatList
                   data={ this.state.engineerList }
-                  renderItem={({item}) => <Text>{item.name}</Text>}
+                  renderItem={({item}) => 
+                    <Text>{item.name}</Text>
+                  }
                   keyExtractor={(item, index) => index.toString() }
-                />
+                /> */}
+                {this.state.engineerList.map((item) => (
+
+                 <View style={styles.item} >
+                
+                 <Card
+                   title={item.name}
+                   >
+                   <Text style={{marginBottom: 10}}>
+                     The idea with React Native Elements is more about component structure than actual design.
+                   </Text>
+                   <Button
+                     icon={<Icon name='code' color='#ffffff' />}
+                     buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
+                     title='VIEW NOW' />
+                 </Card>
+ 
+               </View>
+
+
+                ))}
+
+               
+                
+
+            
+              <View style={styles.item} >
+                
+                <Card
+                  title='HELLO WORLD'
+                  >
+                  <Text style={{marginBottom: 10}}>
+                    The idea with React Native Elements is more about component structure than actual design.
+                  </Text>
+                  <Button
+                    icon={<Icon name='code' color='#ffffff' />}
+                    buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
+                    title='VIEW NOW' />
+                </Card>
+
               </View>
+
+              <View style={styles.item} >
+                <Card title='HELLO WORLD'>
+                  <Text style={{marginBottom: 10}}> The idea with React Native Elements is more about component structure than actual design.</Text>
+                  <Button icon={<Icon name='code' color='#ffffff' />} buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}} title='VIEW NOW' />
+                </Card>
+              </View>
+              <View style={styles.item} >
+                <Card title='HELLO WORLD'>
+                  <Text style={{marginBottom: 10}}> The idea with React Native Elements is more about component structure than actual design.</Text>
+                  <Button icon={<Icon name='code' color='#ffffff' />} buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}} title='VIEW NOW' />
+                </Card>
+              </View>
+              <View style={styles.item} >
+                <Card title='HELLO WORLD'>
+                  <Text style={{marginBottom: 10}}> The idea with React Native Elements is more about component structure than actual design.</Text>
+                  <Button icon={<Icon name='code' color='#ffffff' />} buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}} title='VIEW NOW' />
+                </Card>
+              </View>
+              <View style={styles.item} >
+                <Card title='HELLO WORLD'>
+                  <Text style={{marginBottom: 10}}> The idea with React Native Elements is more about component structure than actual design.</Text>
+                  <Button icon={<Icon name='code' color='#ffffff' />} buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}} title='VIEW NOW' />
+                </Card>
+              </View>
+              <View style={styles.item} >
+                <Card title='HELLO WORLD'>
+                  <Text style={{marginBottom: 10}}> The idea with React Native Elements is more about component structure than actual design.</Text>
+                  <Button icon={<Icon name='code' color='#ffffff' />} buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}} title='VIEW NOW' />
+                </Card>
+              </View>
+              
+
+
+
+                {/* {console.log(this.state.engineerList, 'lopopoppopop')} */}
+                {/* <FlatList
+                  data={ this.state.engineerList }
+                  renderItem={({item}) => 
+                    <Text>{item.name}</Text>
+                  }
+                  keyExtractor={(item, index) => index.toString() }
+                /> */}
+
+{/* <Card
+  title='HELLO WORLD'
+  >
+  <Text style={{marginBottom: 10}}>
+    The idea with React Native Elements is more about component structure than actual design.
+  </Text>
+  <Button
+    icon={<Icon name='code' color='#ffffff' />}
+    buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
+    title='VIEW NOW' />
+</Card>
+
+<Card
+  title='HELLO xxx'
+  >
+  <Text style={{marginBottom: 10}}>
+    The idea with React Native Elements is more about component structure than actual design.
+  </Text>
+  <Button
+    icon={<Icon name='code' color='#ffffff' />}
+    buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
+    title='VIEW NOW' />
+</Card>
+
+<Card
+  title='HELLO asdasd'
+  >
+  <Text style={{marginBottom: 10}}>
+    The idea with React Native Elements is more about component structure than actual design.
+  </Text>
+  <Button
+    icon={<Icon name='code' color='#ffffff' />}
+    buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
+    title='VIEW NOW' />
+</Card>
+
+
+
+
+                <Button
+                    title="To the engineer detail"
+                    onPress={() => navigate('EngineerDetail')}
+                />
+
+                <Text>
+                  asdasdsad
+                </Text> */}
+
+
+              </ScrollView>
+              {/* </View> */}
 
 
               <ActionButton
@@ -244,11 +386,6 @@ class EngineerListScreen extends React.Component {
                     selectedIndex={this.state.selectedIndexOrder}
                   />
 
-                  
-
-
-
-
                 </ModalContent>
 
               </Modal>
@@ -261,3 +398,21 @@ class EngineerListScreen extends React.Component {
 }
 
 export default EngineerListScreen;
+
+
+{/* <View style={{flex: 1,  backgroundColor: 'steelblue'}} ></View> */}
+
+const styles = StyleSheet.create({
+  container: {
+    // flex: 1,
+    backgroundColor: 'steelblue',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: 'flex-start' // if you want to fill rows left to right
+  },
+  item: {
+    backgroundColor: 'red',
+    width: '50%' // is 50% of container width
+    
+  }
+})
