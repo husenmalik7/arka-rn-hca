@@ -15,6 +15,10 @@ import { createStackNavigator } from 'react-navigation-stack';
 // Screens
 import LoginScreen from './src/screens/LoginScreen';
 import RegisterScreen from './src/screens/RegisterScreen';
+import CreateProfileCompanyScreen from './src/screens/CreateProfileCompanyScreen'
+import CreateProfileEngineerScreen from './src/screens/CreateProfileEngineerScreen'
+
+// EngineerScreen
 import EngineerListScreen from './src/screens/Engineer/EngineerListScreen';
 import EngineerDetailScreen from './src/screens/Engineer/EngineerDetailScreen'
 
@@ -33,6 +37,15 @@ const Navigator = createStackNavigator({
         screen: RegisterScreen,
         navigationOptions: { headerShown: false }
     },
+    CreateProfileCompany: { 
+        screen: CreateProfileCompanyScreen,
+        navigationOptions: { headerShown: false }
+    },
+    CreateProfileEngineer: { 
+        screen: CreateProfileEngineerScreen,
+        navigationOptions: { headerShown: false }
+    },
+
     EngineerList: { 
         screen: EngineerListScreen,
         navigationOptions: { headerShown: false }
